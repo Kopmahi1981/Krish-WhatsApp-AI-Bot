@@ -32,14 +32,58 @@ router.get("/", (req, res) => {
 // ===============================
 // Incoming WhatsApp Messages (POST)
 // ===============================
-// ===============================
-// Incoming WhatsApp Messages (POST)
-// ===============================
 router.post("/", (req, res) => {
   console.log("🔥🔥🔥 WEBHOOK HIT 🔥🔥🔥");
   console.log(JSON.stringify(req.body, null, 2));
 
+  // Acknowledge immediately so Meta does not retry (fast 200 required),
+  // then process the message asynchronously.
   res.sendStatus(200);
+
+  processIncomingMessage(req.body);
 });
+
+// ===============================
+// Async Message Processing
+// ===============================
+async function processIncomingMessage(body) {
+  try {
+    const value = body?.entry?.[0]?.changes?.[0]?.value;
+    const message = value?.messages?.[0];
+
+    // Ignore status callbacks (delivery/read receipts) and empty payloads.
+    if (!message) {
+      return;
+    }
+
+    // Phase 1 handles text messages only.
+    if (message.type !== "text") {
+      console.log(`ℹ️ Ignoring non-text message of type: ${message.type}`);
+      return;
+    }
+
+    const from = message.from;
+    const text = message.text?.body;
+
+    if (!from || !text) {
+      return;
+    }
+
+    // Diagnostic: incoming message
+    console.log(`📥 Incoming message from ${from}: ${text}`);
+
+    const reply = await generateReply(text);
+
+    // Diagnostic: AI reply generated
+    console.log(`🧠 AI reply generated: ${reply}`);
+
+    await sendWhatsAppMessage(from, reply);
+
+    // Diagnostic: reply sent successfully
+    console.log(`📤 Reply sent successfully to ${from}`);
+  } catch (error) {
+    console.error("❌ Error processing incoming message:", error);
+  }
+}
 
 module.exports = router;
