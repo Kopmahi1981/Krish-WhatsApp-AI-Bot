@@ -42,17 +42,21 @@ async function sendWhatsAppMessage(to, message) {
     console.log("✅ WhatsApp reply sent");
     console.log(response.data);
   } catch (error) {
-    console.error("❌ WhatsApp Send Error");
+  console.error("========== WHATSAPP ERROR ==========");
 
-    if (error.response) {
-      console.error(error.response.data);
-    } else {
-      console.error(error.message);
-    }
-
-    throw error;
+  if (error.response) {
+    console.error("Status:", error.response.status);
+    console.error(
+      JSON.stringify(error.response.data, null, 2)
+    );
+  } else {
+    console.error(error);
   }
+
+  throw error;
 }
+}
+
 
 module.exports = {
   sendWhatsAppMessage,

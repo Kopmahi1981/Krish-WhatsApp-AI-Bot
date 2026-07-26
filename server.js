@@ -17,6 +17,10 @@ app.use(express.json());
 app.get("/ping", (req, res) => {
   res.send("✅ WhatsApp Bot Server is Running!");
 });
+app.use((req, res, next) => {
+  console.log(`➡️ ${req.method} ${req.originalUrl}`);
+  next();
+});
 
 // WhatsApp Webhook
 app.use("/webhook", webhookRoutes);

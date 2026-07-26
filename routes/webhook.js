@@ -11,6 +11,7 @@ const { sendWhatsAppMessage } = require("../services/whatsapp");
 // ===============================
 router.get("/", (req, res) => {
   const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
+  console.log("VERIFY_TOKEN:", process.env.VERIFY_TOKEN);
 
   const mode = req.query["hub.mode"];
   const token = req.query["hub.verify_token"];
@@ -31,45 +32,12 @@ router.get("/", (req, res) => {
 // ===============================
 // Incoming WhatsApp Messages (POST)
 // ===============================
-router.post("/", async (req, res) => {
-  console.log("========== NEW REQUEST ==========");
-
-  try {
-    const message =
-      req.body.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
-
-    if (!message) {
-      console.log("ℹ️ No incoming message.");
-      return res.sendStatus(200);
-    }
-
-    const from = message.from;
-    const text = message.text?.body || "";
-
-    console.log("User:", from);
-    console.log("Text:", text);
-
-    console.log("🚨 Calling Gemini...");
-
-    const aiReply = await generateReply(text);
-
-    console.log("🚨 Gemini Reply:");
-    console.log(aiReply);
-    console.log("Type:", typeof aiReply);
-
-    if (typeof aiReply === "string") {
-      console.log("Length:", aiReply.length);
-    }
-
-    console.log("🚨 About to send WhatsApp message...");
-
-    await sendWhatsAppMessage(from, aiReply);
-
-    console.log("✅ Reply sent successfully");
-  } catch (err) {
-    console.error("❌ WEBHOOK ERROR");
-    console.error(err);
-  }
+// ===============================
+// Incoming WhatsApp Messages (POST)
+// ===============================
+router.post("/", (req, res) => {
+  console.log("🔥🔥🔥 WEBHOOK HIT 🔥🔥🔥");
+  console.log(JSON.stringify(req.body, null, 2));
 
   res.sendStatus(200);
 });
