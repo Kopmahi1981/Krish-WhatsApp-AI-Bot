@@ -27,6 +27,28 @@ An AI-powered WhatsApp chatbot built with **Node.js**, **Express.js**, **WhatsAp
 
 ---
 
+## AI Development Framework
+
+This project uses the KAIOS (Krish AI Intelligence Operating System) framework for AI-assisted development.
+
+The framework documentation is located in the `AI/` directory and includes:
+
+- Project memory
+- Development protocols
+- Coding standards
+- Decision history
+- Bug tracking
+- Testing and deployment checklists
+- Universal startup prompt
+
+Any AI assistant contributing to this project should initialize by reading:
+
+`AI/UNIVERSAL_STARTUP_PROMPT.md`
+
+For complete framework documentation, see:
+
+`AI/README.md`
+
 # Project Structure
 
 ```text
