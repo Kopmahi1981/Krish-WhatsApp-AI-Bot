@@ -1,20 +1,51 @@
+/**
+ * ============================================================================
+ * GEMINI SERVICE
+ * ============================================================================
+ * Handles AI response generation using Google Gemini.
+ * Receives the full conversation history from Conversation Manager.
+ * ============================================================================
+ */
+
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+console.log("✅ NEW GEMINI SERVICE LOADED");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-async function generateReply(userMessage) {
+/**
+ * Generate AI reply
+ * @param {string} conversation Full conversation history
+ * @returns {Promise<string>}
+ */
+async function generateReply(conversation) {
   try {
+    console.log("================================");
+    console.log("🤖 Sending conversation to Gemini");
+    console.log("================================");
+    console.log(conversation);
+
     const model = genAI.getGenerativeModel({
       model: "gemini-2.5-flash",
     });
 
-    const result = await model.generateContent(userMessage);
+    const result = await model.generateContent(conversation);
 
-    return result.response.text();
+    const response = result.response.text();
+
+    console.log("================================");
+    console.log("✅ Gemini Response");
+    console.log("================================");
+    console.log(response);
+
+    return response;
   } catch (error) {
     console.error("❌ Gemini Error:", error);
+
     return "Sorry, I'm having trouble thinking right now. Please try again.";
   }
 }
 
-module.exports = { generateReply };
+module.exports = {
+  generateReply,
+};

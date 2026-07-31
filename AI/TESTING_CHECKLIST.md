@@ -89,6 +89,65 @@ All AI collaborators should recommend appropriate testing before considering wor
 
 ---
 
+# v1.0.2 Baseline Verification Record
+
+Date: 2026-07-26
+
+Status: Passed
+
+## Test Environment
+
+- Project Version: v1.0.2
+- Platform: Node.js + Express
+- Messaging Platform: WhatsApp Cloud API
+- AI Provider: Google Gemini
+- Exposure: Cloudflare Tunnel
+- Test Type: Live Integration + Ad-hoc Verification
+
+## Verification Scope
+
+This verification confirms the completed functionality of the v1.0.2 baseline.
+
+Features planned for future releases (conversation memory, document Q&A, voice support, etc.) were not part of this verification.
+
+## Functional
+
+- ✓ Webhook verification (GET) confirmed
+- ✓ Incoming messages received and processed
+- ✓ Automatic AI replies delivered
+- ✓ Long-message splitting (4096-character limit) verified
+- ✓ Non-text and status callbacks ignored without error
+
+## Integration
+
+- ✓ WhatsApp Cloud API send and receive tested live
+- ✓ Gemini AI responses verified
+- ✓ Cloudflare Tunnel delivering webhooks
+
+## Regression / Stability
+
+- ✓ Webhook acknowledges immediately (no provider retries observed)
+- ✓ Existing functionality unaffected
+
+## Repository
+
+- ✓ GitHub synchronized
+
+## Outstanding Test Coverage
+
+- Automated unit tests
+- Automated integration tests
+- Load / stress testing
+- Long-duration reliability testing
+
+Status: Deferred beyond v1.0.2 baseline.
+
+## Notes
+
+Verification performed via ad-hoc scripts (tests/) and live WhatsApp testing. No automated test runner is in place at this baseline.
+
+---
+
 # AI Instructions
 
 Before marking any task complete, the AI should:
@@ -110,6 +169,11 @@ Before marking any task complete, the AI should:
 ---
 
 # Version History
+
+## v1.0.2
+
+- Added the v1.0.2 Baseline Verification Record (project-specific).
+- Reusable framework checklist left unchanged.
 
 ## v1.0.1
 

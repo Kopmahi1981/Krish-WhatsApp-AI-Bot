@@ -5,6 +5,7 @@ const router = express.Router();
 
 const { generateReply } = require("../services/geminiService");
 const { sendWhatsAppMessage } = require("../services/whatsapp");
+const conversationManager = require("../services/conversationManager");
 
 // ===============================
 // Webhook Verification (GET)
@@ -72,7 +73,17 @@ async function processIncomingMessage(body) {
     // Diagnostic: incoming message
     console.log(`📥 Incoming message from ${from}: ${text}`);
 
-    const reply = await generateReply(text);
+    // Save the user's message
+    conversationManager.saveUserMessage(from, text);
+
+    // Build conversation history
+    const conversation = conversationManager.buildConversation(from);
+
+    // Send the full conversation to Gemini
+    const reply = await generateReply(conversation);
+
+    // Save the assistant's response
+    conversationManager.saveAssistantMessage(from, reply);
 
     // Diagnostic: AI reply generated
     console.log(`🧠 AI reply generated: ${reply}`);

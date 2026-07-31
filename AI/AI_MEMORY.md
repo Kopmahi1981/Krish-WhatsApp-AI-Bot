@@ -8,7 +8,7 @@
 |------|------|
 | Framework | KAIOS |
 | Document | AI Memory |
-| Version | 1.0.1 |
+| Version | 1.0.2 |
 | Author | Koppula Mahender (Krish) |
 | Status | Active |
 | Last Updated | 2026-07-26 |
@@ -36,78 +36,98 @@ This document serves as the long-term memory of the project.
 
 # Project Identity
 
-Project Name:
+Project Name: Krish WhatsApp AI Bot
 
-Project Type:
+Project Type: AI-powered WhatsApp chatbot / messaging automation service
 
-Business Domain:
+Business Domain: Conversational AI / messaging automation
 
-Primary Objective:
+Primary Objective: Automatically receive and answer WhatsApp messages with AI-generated responses
 
 ---
 
 # Business Knowledge
 
-Document important business rules that should always be respected.
+- Secrets must never be exposed in logs or committed to version control.
+- Preserve existing workflows and architecture unless explicitly approved.
+- The human developer retains final authority over all changes (KAIOS approval workflow).
+- Documentation reflects only completed work, never assumptions about future implementation.
 
-Examples:
+---
 
-- Customer data must remain private.
-- Pricing calculations must follow approved business rules.
-- Preserve existing workflows unless explicitly approved.
+# Development Principles
+
+- Preserve the existing project architecture unless explicitly approved.
+- Implement one feature at a time.
+- Prefer minimal, incremental changes.
+- Complete testing before introducing additional functionality.
+- Documentation follows completed implementation.
+- Every milestone ends with:
+  - Save All
+  - Test
+  - Git Commit
+  - Git Push
+  - ZIP Backup
+
+---
+
+# Security Memory
+
+- Never expose API keys, access tokens, or secrets.
+- Never commit .env files.
+- Mask sensitive values in logs whenever possible.
+- Avoid printing full credentials during debugging.
+
+---
+
+# Current Stable Baseline
+
+Version: v1.0.2
+
+Status: Stable
+
+Completed:
+
+- Webhook verification
+- WhatsApp Cloud API integration
+- Cloudflare Tunnel
+- Gemini AI integration
+- Automatic AI replies
+- Long-message splitting
 
 ---
 
 # Technical Knowledge
 
-Document important technical information.
-
-Examples:
-
-- Preferred frameworks
-- API limitations
-- Third-party integrations
-- Performance considerations
+- Backend runtime: Node.js with Express.
+- AI responses are generated through Google Gemini.
+- Messaging is handled through the WhatsApp Cloud API.
+- The application is stateless; no database is currently used.
 
 ---
 
 # Project Conventions
 
-Document project-wide conventions.
-
-Examples:
-
-- Naming conventions
-- Folder organization
-- File structure
-- Coding preferences
-- Documentation style
+- Configuration is managed through environment variables.
+- Framework documentation is maintained inside the AI/ folder.
+- Ad-hoc verification scripts are used for testing (no automated test runner).
+- Semantic Versioning is followed for releases.
 
 ---
 
 # Lessons Learned
 
-Record important lessons discovered during development.
-
-Examples:
-
-- Avoid duplicate API requests.
-- Validate all external inputs.
-- Prefer reusable components.
-- Document significant decisions.
+- Acknowledge the inbound webhook immediately, then process the message, to avoid provider retries.
+- Ignore non-message and non-text payloads to prevent unintended replies.
+- Validate external input before processing.
 
 ---
 
 # Known Constraints
 
-Document limitations that affect the project.
-
-Examples:
-
-- Budget limitations
-- Hosting limitations
-- Third-party API limits
-- Performance constraints
+- No conversation memory as of v1.0.2 (each message is handled independently).
+- Dependent on external providers: WhatsApp Cloud API and Gemini AI.
+- No data persistence.
 
 ---
 
@@ -139,6 +159,11 @@ Before making recommendations, every AI assistant should:
 - CHANGELOG_AI.md — AI-generated project changes
 
 # Version History
+
+## v1.0.2
+
+- Populated AI Memory to reflect the v1.0.2 stable baseline.
+- Added Development Principles, Security Memory, and Current Stable Baseline sections.
 
 ## v1.0.1
 
