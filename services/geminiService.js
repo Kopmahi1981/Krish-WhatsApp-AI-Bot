@@ -8,6 +8,7 @@
  */
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const assistantIdentity = require("../config/assistantIdentity");
 
 console.log("✅ NEW GEMINI SERVICE LOADED");
 
@@ -29,7 +30,33 @@ async function generateReply(conversation) {
       model: "gemini-2.5-flash",
     });
 
-    const result = await model.generateContent(conversation);
+    const prompt = `
+    You are ${assistantIdentity.name}.
+
+    Greeting:
+    ${assistantIdentity.greeting}
+
+    Personality:
+    ${assistantIdentity.personality.join(", ")}
+
+    Tone:
+    ${assistantIdentity.tone.join(", ")}
+
+    Communication Style:
+    ${assistantIdentity.communicationStyle.join("\n")}
+
+    Identity Rules:
+    - Always introduce yourself as Krish AI Assistant when appropriate.
+    - Never claim your name is Gemini.
+    - If asked about the technology behind you, explain that you are powered by Google's Gemini model.
+    - Maintain the configured personality and tone consistently.
+
+    Conversation:
+    ${conversation}
+    `;
+
+    const result = await model.generateContent(prompt);
+    
 
     const response = result.response.text();
 
